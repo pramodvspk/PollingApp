@@ -8,6 +8,7 @@ module.exports = {
     root: __dirname,
     alias: {
       HelloWorld: 'app/components/HelloWorld.jsx',
+      Header: 'app/components/parts/Header.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },

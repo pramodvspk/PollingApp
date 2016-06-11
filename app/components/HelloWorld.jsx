@@ -1,10 +1,14 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var io = require('socket.io-client');
+var Header = require('Header');
+
 var HelloWorld = React.createClass({
   render: function () {
     return (
-      <h1>Hello World from React</h1>
+      <div>
+        <Header title="New Header"></Header>
+      </div>
     );
   },
 	componentWillMount: function () {

@@ -19673,24 +19673,25 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
 	var io = __webpack_require__(160);
+	var Header = __webpack_require__(207);
+
 	var HelloWorld = React.createClass({
-		displayName: 'HelloWorld',
+	  displayName: 'HelloWorld',
 
-
-		render: function render() {
-			return React.createElement(
-				'h1',
-				null,
-				'Hello World'
-			);
-		},
-		componentWillMount: function componentWillMount() {
-			this.socket = io('http://localhost:3000');
-			this.socket.on('connect', this.connect);
-		},
-		connect: function connect() {
-			alert('Connected: ' + this.socket.id);
-		}
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(Header, { title: 'New Header' })
+	    );
+	  },
+	  componentWillMount: function componentWillMount() {
+	    this.socket = io('http://localhost:3000');
+	    this.socket.on('connect', this.connect);
+	  },
+	  connect: function connect() {
+	    alert('Connected: ' + this.socket.id);
+	  }
 	});
 
 	module.exports = HelloWorld;
@@ -27119,6 +27120,29 @@
 	};
 
 
+
+/***/ },
+/* 207 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var PropTypes = React.PropTypes;
+
+	function Header(props) {
+	  return React.createElement(
+	    'h1',
+	    null,
+	    props.title
+	  );
+	}
+
+	Header.propTypes = {
+	  title: React.PropTypes.string.isRequired
+	};
+
+	module.exports = Header;
 
 /***/ }
 /******/ ]);
