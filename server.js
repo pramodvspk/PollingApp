@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 
 var connections = [];
+var title = 'Untitled Presentation';
 
 app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
@@ -20,6 +21,9 @@ io.sockets.on('connection', function (socket) {
     console.log("Remaining sockets: " + connections.length);
   });
 
+  socket.emit('welcome', {
+    title: title
+  });
 	connections.push(socket);
   console.log("Current sockets: " + connections.length);
 });

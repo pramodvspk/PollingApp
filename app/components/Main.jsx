@@ -6,13 +6,15 @@ var Header = require('Header');
 var Main = React.createClass({
   getInitialState: function () {
     return {
-      status: 'disconnected'
+      status: 'disconnected',
+      title: ''
     }
   },
   componentWillMount: function () {
     this.socket = io('http://localhost:3000');
     this.socket.on('connect', this.connect);
     this.socket.on('disconnect', this.disconnect);
+    this.socket.on('welcome', this.welcome);
   },
   disconnect: function () {
     this.setState({status: 'disconnected'});
@@ -20,10 +22,14 @@ var Main = React.createClass({
   connect: function () {
     this.setState({status: 'connected'});
   },
+  welcome: function (serverState) {
+    this.setState({title: serverState.title})
+  },
   render: function () {
     return (
       <div>
-        <Header title="New Header" status={this.state.status}></Header>
+        <Header title={this.state.title} status={this.state.status}></Header>
+        {this.props.children}
       </div>
     );
   }
