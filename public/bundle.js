@@ -48,8 +48,8 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
-	var HelloWorld = __webpack_require__(159);
-	ReactDOM.render(React.createElement(HelloWorld, null), document.getElementById('app'));
+	var Main = __webpack_require__(159);
+	ReactDOM.render(React.createElement(Main, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -19675,26 +19675,31 @@
 	var io = __webpack_require__(160);
 	var Header = __webpack_require__(207);
 
-	var HelloWorld = React.createClass({
-	  displayName: 'HelloWorld',
+	var Main = React.createClass({
+	  displayName: 'Main',
 
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(Header, { title: 'New Header' })
-	    );
+	  getInitialState: function getInitialState() {
+	    return {
+	      status: 'disconnected'
+	    };
+	  },
+	  connect: function connect() {
+	    this.setState({ status: 'connected' });
 	  },
 	  componentWillMount: function componentWillMount() {
 	    this.socket = io('http://localhost:3000');
 	    this.socket.on('connect', this.connect);
 	  },
-	  connect: function connect() {
-	    alert('Connected: ' + this.socket.id);
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(Header, { title: 'New Header', status: this.state.status })
+	    );
 	  }
 	});
 
-	module.exports = HelloWorld;
+	module.exports = Main;
 
 /***/ },
 /* 160 */
@@ -27130,13 +27135,36 @@
 	var React = __webpack_require__(1);
 	var PropTypes = React.PropTypes;
 
-	function Header(props) {
-	  return React.createElement(
-	    'h1',
-	    null,
-	    props.title
-	  );
-	}
+	var Header = React.createClass({
+	  displayName: 'Header',
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      status: 'Disconnected'
+	    };
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'header',
+	      { className: 'row' },
+	      React.createElement(
+	        'div',
+	        { className: 'col-xs-10' },
+	        React.createElement(
+	          'h1',
+	          null,
+	          this.props.title
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'col-xs-2' },
+	        React.createElement('span', { id: 'connection-status', className: this.props.status })
+	      )
+	    );
+	  }
+
+	});
 
 	Header.propTypes = {
 	  title: React.PropTypes.string.isRequired
