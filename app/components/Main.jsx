@@ -9,12 +9,16 @@ var Main = React.createClass({
       status: 'disconnected'
     }
   },
-  connect: function () {
-    this.setState({status: 'connected'});
-  },
   componentWillMount: function () {
     this.socket = io('http://localhost:3000');
     this.socket.on('connect', this.connect);
+    this.socket.on('disconnect', this.disconnect);
+  },
+  disconnect: function () {
+    this.setState({status: 'disconnected'});
+  },
+  connect: function () {
+    this.setState({status: 'connected'});
   },
   render: function () {
     return (
